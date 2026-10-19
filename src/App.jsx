@@ -1,4 +1,5 @@
 import React from 'react';
+import SettingsForm from './components/SettingsForm.jsx';
 
 export default function App() {
   const features = [
@@ -28,6 +29,7 @@ export default function App() {
         </div>
         <nav className="nav-links">
           <a href="#features">Features</a>
+          <a href="#settings">Settings</a>
           <a href="#about">About</a>
           <button className="btn btn-secondary">Sign In</button>
         </nav>
@@ -61,6 +63,14 @@ export default function App() {
               </div>
             ))}
           </div>
+        </section>
+
+        <section id="settings" className="settings-section">
+          <div className="section-header">
+            <h2>Profile & Study Settings</h2>
+            <p>Customize your learning preferences and study commitments.</p>
+          </div>
+          <SettingsForm />
         </section>
 
         <section id="about" className="cta-section">
