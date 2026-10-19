@@ -17,7 +17,7 @@ SkillTrack provides a centralized dashboard to:
 
 - **Framework**: [React 19](https://react.dev/)
 - **Bundler / Dev Server**: [Vite 6](https://vite.dev/)
-- **Language**: JavaScript (ES Modules)
+- **Language**: JavaScript (ES Modules / JSX)
 - **Styling**: Modern Responsive CSS
 
 ## Setup, Run, and Build Instructions
