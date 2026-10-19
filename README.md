@@ -50,6 +50,12 @@ Locally preview the production build:
 npm run preview
 ```
 
+### Testing
+Run unit tests:
+```bash
+npm test
+```
+
 ## Project Status
 
 - **Status**: Active Development

@@ -1,6 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import SettingsModal from './components/SettingsModal';
+import PreferencesSummary from './components/PreferencesSummary';
+import { getSavedPreferences } from './utils/preferences';
 
 export default function App() {
+  const [preferences, setPreferences] = useState(() => getSavedPreferences());
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  useEffect(() => {
+    // Open settings if URL contains #settings hash
+    const checkHash = () => {
+      if (window.location.hash === '#settings') {
+        setIsSettingsOpen(true);
+      }
+    };
+    checkHash();
+    window.addEventListener('hashchange', checkHash);
+    return () => window.removeEventListener('hashchange', checkHash);
+  }, []);
+
+  const handleOpenSettings = () => {
+    setIsSettingsOpen(true);
+  };
+
+  const handleCloseSettings = () => {
+    setIsSettingsOpen(false);
+    if (window.location.hash === '#settings') {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+  };
+
+  const handleSavePreferences = (updated) => {
+    setPreferences(updated);
+  };
+
   const features = [
     {
       title: 'Targeted Skill Mapping',
@@ -27,9 +60,17 @@ export default function App() {
           <span className="brand-name">SkillTrack</span>
         </div>
         <nav className="nav-links">
+          <a href="#learning-plan">My Plan</a>
           <a href="#features">Features</a>
           <a href="#about">About</a>
-          <button className="btn btn-secondary">Sign In</button>
+          <button
+            type="button"
+            className="btn btn-secondary nav-settings-btn"
+            onClick={handleOpenSettings}
+            aria-label="Open learning preferences settings"
+          >
+            ⚙️ Settings
+          </button>
         </nav>
       </header>
 
@@ -42,9 +83,24 @@ export default function App() {
             skills, track learning milestones, and achieve career goals.
           </p>
           <div className="hero-actions">
-            <button className="btn btn-primary">Get Started</button>
-            <button className="btn btn-outline">Explore Demo</button>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={handleOpenSettings}
+            >
+              Configure Learning Preferences
+            </button>
+            <a href="#learning-plan" className="btn btn-outline">
+              View Active Plan
+            </a>
           </div>
+        </section>
+
+        <section id="learning-plan" className="plan-section">
+          <PreferencesSummary
+            preferences={preferences}
+            onOpenSettings={handleOpenSettings}
+          />
         </section>
 
         <section id="features" className="features-section">
@@ -66,13 +122,27 @@ export default function App() {
         <section id="about" className="cta-section">
           <h2>Ready to accelerate your learning?</h2>
           <p>Join developers taking control of their career trajectories today.</p>
-          <button className="btn btn-primary">Start Tracking Free</button>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={handleOpenSettings}
+          >
+            Update Learning Preferences
+          </button>
         </section>
       </main>
 
       <footer className="footer">
         <p>&copy; {new Date().getFullYear()} SkillTrack. All rights reserved.</p>
       </footer>
+
+      {/* Learning Preferences Settings Modal */}
+      <SettingsModal
+        isOpen={isSettingsOpen}
+        onClose={handleCloseSettings}
+        initialPreferences={preferences}
+        onSave={handleSavePreferences}
+      />
     </div>
   );
 }
