@@ -52,3 +52,15 @@ All commit messages should follow the [Conventional Commits specification](https
 - `fix(navbar): resolve mobile navigation alignment issue`
 - `docs(readme): add setup and build commands`
 - `chore(deps): update vite configuration`
+
+## Learned Project Rules
+
+1. **Accessible forms:** Every form input must have a visible label programmatically associated with its control using `htmlFor` and a matching `id`.
+
+2. **Input validation:** Validate and normalize user input before accepting a form submission. Display understandable, field-specific errors for invalid values.
+
+3. **Required tests:** Every new form feature must include automated tests covering valid input, invalid input, and at least one relevant edge case.
+
+4. **Verification:** After implementing a feature, run the configured test suite and `npm run build`. Report the actual results and never claim checks passed unless they ran successfully.
+
+5. **Honest persistence claims:** Do not claim that data is saved permanently or sent to a backend unless that behavior is implemented and verified.
